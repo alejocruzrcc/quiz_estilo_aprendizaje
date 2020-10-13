@@ -13,13 +13,15 @@ class App extends Component {
       counter: 0,
       questionId: 1,
       question: '',
+      questiontype: '',
       answerOptions: [],
-      answer: '',
+      answer: [],
       answersCount: {},
       result: ''
     };
 
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+    this.handleAnswerButton = this.handleAnswerButton.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +30,7 @@ class App extends Component {
     );
     this.setState({
       question: quizQuestions[0].question,
+      questiontype: quizQuestions[0].questiontype,
       answerOptions: shuffledAnswerOptions[0]
     });
   }
@@ -52,9 +55,12 @@ class App extends Component {
     return array;
   }
 
-  handleAnswerSelected(event) {
-    this.setUserAnswer(event.currentTarget.value);
+  
+  handleAnswerSelected(event) { 
+    this.setUserAnswer(event.currentTarget.value, event.currentTarget.checked);
+  }
 
+  handleAnswerButton() {
     if (this.state.questionId < quizQuestions.length) {
       setTimeout(() => this.setNextQuestion(), 300);
     } else {
@@ -62,14 +68,26 @@ class App extends Component {
     }
   }
 
-  setUserAnswer(answer) {
-    this.setState((state, props) => ({
-      answersCount: {
-        ...state.answersCount,
-        [answer]: (state.answersCount[answer] || 0) + 1
-      },
-      answer: answer
-    }));
+  setUserAnswer(answer, isChecked) {
+    if(isChecked){
+      this.setState((state, props) => ({
+        answersCount: {
+          ...state.answersCount,
+          [answer]: (state.answersCount[answer] || 0) + 1
+        },
+        answer: [...this.state.answer, answer]
+      }));
+    }
+    else{
+      this.setState((state, props) => ({
+        answersCount: {
+          ...state.answersCount,
+          [answer]: (state.answersCount[answer] || 0) - 1
+        },
+        answer: this.state.answer.filter(item => item !== answer)
+      }));
+    }
+
   }
 
   setNextQuestion() {
@@ -95,7 +113,7 @@ class App extends Component {
   }
 
   setResults(result) {
-    if (result.length === 1) {
+    if (result.length === 1 & result[0] !== "") {
       this.setState({ result: result[0] });
     } else {
       this.setState({ result: 'Undetermined' });
@@ -107,10 +125,12 @@ class App extends Component {
       <Quiz
         answer={this.state.answer}
         answerOptions={this.state.answerOptions}
+        checkedItems = {this.state.checkedItems}
         questionId={this.state.questionId}
         question={this.state.question}
         questionTotal={quizQuestions.length}
         onAnswerSelected={this.handleAnswerSelected}
+        onAnswerButton = {this.handleAnswerButton}
       />
     );
   }
@@ -124,7 +144,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>React Quiz</h2>
+          <h2>Descubriendo mi estilo de aprendizaje</h2>
         </div>
         {this.state.result ? this.renderResult() : this.renderQuiz()}
       </div>

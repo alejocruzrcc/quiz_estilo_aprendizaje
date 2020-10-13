@@ -146,3 +146,8 @@ body {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
+
+.boton-siguiente {
+  margin:0 auto;
+  display:block;
+}

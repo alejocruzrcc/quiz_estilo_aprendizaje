@@ -4,6 +4,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import Question from '../components/Question';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
+import Controls from '../components/Controls';
 
 function Quiz(props) {
   function renderAnswerOptions(key) {
@@ -12,9 +13,10 @@ function Quiz(props) {
         key={key.content}
         answerContent={key.content}
         answerType={key.type}
-        answer={props.answer}
+        answerId={key.id}
+        //answer={props.answer}
         questionId={props.questionId}
-        onAnswerSelected={props.onAnswerSelected}
+        onAnswerSelected = {props.onAnswerSelected}
       />
     );
   }
@@ -35,13 +37,15 @@ function Quiz(props) {
         <ul className="answerOptions">
           {props.answerOptions.map(renderAnswerOptions)}
         </ul>
+        <Controls onAnswerButton={props.onAnswerButton}/>
+ 
       </div>
     </CSSTransitionGroup>
   );
 }
 
 Quiz.propTypes = {
-  answer: PropTypes.string.isRequired,
+  //answer: PropTypes.array.isRequired,
   answerOptions: PropTypes.array.isRequired,
   question: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,

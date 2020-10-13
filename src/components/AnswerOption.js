@@ -5,16 +5,15 @@ function AnswerOption(props) {
   return (
     <li className="answerOption">
       <input
-        type="radio"
+        type="checkbox"
         className="radioCustomButton"
         name="radioGroup"
-        checked={props.answerType === props.answer}
-        id={props.answerType}
+        //checked={props.answerType === props.answer}
+        id={props.answerId}
         value={props.answerType}
-        disabled={props.answer}
         onChange={props.onAnswerSelected}
       />
-      <label className="radioCustomLabel" htmlFor={props.answerType}>
+      <label className="radioCustomLabel" htmlFor={props.answerId}>
         {props.answerContent}
       </label>
     </li>
@@ -24,7 +23,7 @@ function AnswerOption(props) {
 AnswerOption.propTypes = {
   answerType: PropTypes.string.isRequired,
   answerContent: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired,
+  //answer: PropTypes.string.isRequired,
   onAnswerSelected: PropTypes.func.isRequired
 };
 
