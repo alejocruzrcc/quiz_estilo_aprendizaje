@@ -14,14 +14,15 @@ function Result(props) {
       transitionAppearTimeout={500}
     >
       <div>
-        Tu estilo de aprendizaje es: <strong>{props.quizResult}</strong>!
+        Tu estilo de aprendizaje es:
+        {JSON.stringify(props.quizResult)}
       </div>
     </CSSTransitionGroup>
   );
 }
 
 Result.propTypes = {
-  quizResult: PropTypes.string.isRequired
+  quizResult: PropTypes.object.isRequired
 };
 
 export default Result;

@@ -17,7 +17,7 @@ class App extends Component {
       answerOptions: [],
       answer: [],
       answersCount: {},
-      result: ''
+      result: {}
     };
 
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -107,17 +107,16 @@ class App extends Component {
     const answersCount = this.state.answersCount;
     const answersCountKeys = Object.keys(answersCount);
     const answersCountValues = answersCountKeys.map(key => answersCount[key]);
-    const maxAnswerCount = Math.max.apply(null, answersCountValues);
-
-    return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
+    //const maxAnswerCount = Math.max.apply(null, answersCountValues);
+    const total = answersCountValues.reduce((a,b) => a+b, 0)
+    answersCountKeys.map(key =>
+      answersCount[key] = answersCount[key]* 100 / total
+      );
+    return answersCount
   }
 
   setResults(result) {
-    if (result.length === 1 & result[0] !== "") {
-      this.setState({ result: result[0] });
-    } else {
-      this.setState({ result: 'Undetermined' });
-    }
+    this.setState({ result: result });
   }
 
   renderQuiz() {
@@ -146,7 +145,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Descubriendo mi estilo de aprendizaje</h2>
         </div>
-        {this.state.result ? this.renderResult() : this.renderQuiz()}
+        {Object.keys(this.state.result).length === 0 ? this.renderQuiz() : this.renderResult() }
       </div>
     );
   }

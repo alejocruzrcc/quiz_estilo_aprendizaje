@@ -6,7 +6,7 @@ function Controls(props) {
         <div>
             <button
             onClick ={props.onAnswerButton} 
-            className="boton-siguiente">Next</button>
+            className="boton-siguiente">Siguiente</button>
 
         </div>
     )
